@@ -1,0 +1,15 @@
+{
+2  "name": "ga2-630319",
+3  "features": {
+4    "ghcr.io/devcontainers/features/python:1": {}
+5  },
+6  "customizations": {
+7    "vscode": {
+8      "extensions": [
+9        "astral-sh.uv",
+10        "ms-python.python"
+11      ]
+12    }
+13  },
+14  "postCreateCommand": "uv pip install fastapi"
+15}
