@@ -1,0 +1,30 @@
+name: CI with Cache
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/dependencies
+          key: cache-5e1c234
+
+      - name: prime-cache-5e1c234
+        run: |
+          echo "Cache hit: ${{ steps.cache-step.outputs.cache-hit }}"
+          mkdir -p ~/.cache/dependencies
+          echo "dependencies cached" > ~/.cache/dependencies/deps.txt
+
+      - name: 22f1000594@ds.study.iitm.ac.in
+        run: echo "Hello from 22f1000594@ds.study.iitm.ac.in"
