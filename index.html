@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — IITM DS Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,200&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0e0c;
+      --paper: #f5f0e8;
+      --cream: #ede8dc;
+      --rust: #c0410a;
+      --gold: #b8860b;
+      --muted: #7a7065;
+      --border: #d4cec3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1.5rem, 5vw, 5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--rust);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-left: 2rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: clamp(4rem, 12vw, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(3rem, 8vw, 6rem);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--rust);
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .hero-meta {
+      text-align: right;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .hero-meta strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.6rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-sep { margin: 0 2rem; color: var(--rust); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 5rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-num {
+      font-size: 11px;
+      color: var(--rust);
+      letter-spacing: 0.1em;
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 680px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 13px;
+    }
+
+    .about-text p strong { color: var(--ink); font-weight: 400; }
+
+    .stat-block {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat { border-left: 2px solid var(--rust); padding-left: 0.8rem; }
+    .stat-val {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+    /* ── PROJECTS ── */
+    .projects-list { display: flex; flex-direction: column; gap: 0; }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .project-item.visible { opacity: 1; transform: translateY(0); }
+    .project-item:last-child { border-bottom: none; }
+
+    .project-num {
+      font-size: 11px;
+      color: var(--rust);
+      padding-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .project-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 0.4rem;
+      color: var(--ink);
+    }
+
+    .project-desc { font-size: 12px; color: var(--muted); max-width: 480px; }
+
+    .project-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      border: 1px solid var(--rust);
+      padding: 0.2rem 0.6rem;
+      white-space: nowrap;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-cell {
+      background: var(--paper);
+      padding: 1.2rem 1.4rem;
+      transition: background 0.2s;
+    }
+    .skill-cell:hover { background: var(--cream); }
+
+    .skill-name { font-size: 12px; color: var(--ink); margin-bottom: 0.5rem; }
+
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+    }
+    .skill-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      background: var(--rust);
+      width: var(--pct);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .skill-level { font-size: 10px; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.08em; }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 680px) { .contact-wrap { grid-template-columns: 1fr; } }
+
+    .contact-big {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-row:last-child { border-bottom: none; }
+
+    .contact-key {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .contact-val {
+      font-size: 13px;
+      color: var(--ink);
+      word-break: break-all;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.5rem clamp(1.5rem, 5vw, 5rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Portfolio</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-label fade-in">IITM BS Data Science &amp; Applications</div>
+    <h1 class="fade-in delay-1">Data<br><em>Science</em><br>Portfolio</h1>
+  </div>
+  <div class="hero-meta fade-in delay-2">
+    <strong>Student Developer</strong>
+    IIT Madras<br>
+    BS Program<br>
+    2024 — Present
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    Python &nbsp;<span class="ticker-sep">✦</span>&nbsp; Machine Learning &nbsp;<span class="ticker-sep">✦</span>&nbsp; Data Analysis &nbsp;<span class="ticker-sep">✦</span>&nbsp; Git &amp; Version Control &nbsp;<span class="ticker-sep">✦</span>&nbsp; Flask &nbsp;<span class="ticker-sep">✦</span>&nbsp; SQL &nbsp;<span class="ticker-sep">✦</span>&nbsp; Statistical Modelling &nbsp;<span class="ticker-sep">✦</span>&nbsp; REST APIs &nbsp;<span class="ticker-sep">✦</span>&nbsp; Linux &nbsp;<span class="ticker-sep">✦</span>&nbsp; Docker &nbsp;<span class="ticker-sep">✦</span>&nbsp;
+    Python &nbsp;<span class="ticker-sep">✦</span>&nbsp; Machine Learning &nbsp;<span class="ticker-sep">✦</span>&nbsp; Data Analysis &nbsp;<span class="ticker-sep">✦</span>&nbsp; Git &amp; Version Control &nbsp;<span class="ticker-sep">✦</span>&nbsp; Flask &nbsp;<span class="ticker-sep">✦</span>&nbsp; SQL &nbsp;<span class="ticker-sep">✦</span>&nbsp; Statistical Modelling &nbsp;<span class="ticker-sep">✦</span>&nbsp; REST APIs &nbsp;<span class="ticker-sep">✦</span>&nbsp; Linux &nbsp;<span class="ticker-sep">✦</span>&nbsp; Docker &nbsp;<span class="ticker-sep">✦</span>&nbsp;
+  </span>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>BS Data Science & Applications</strong> student at IIT Madras, building skills at the intersection of software engineering and data-driven problem solving.</p>
+      <p>My coursework spans statistics, machine learning, database systems, and application development — complemented by hands-on projects that apply these concepts to real-world scenarios.</p>
+      <p>I'm passionate about <strong>clean code, reproducible analysis,</strong> and understanding systems deeply — from Git internals to neural networks.</p>
+    </div>
+    <div class="stat-block">
+      <div class="stat">
+        <div class="stat-val">BS</div>
+        <div class="stat-label">Program Level</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">IIT</div>
+        <div class="stat-label">Institution</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">DS</div>
+        <div class="stat-label">Specialisation</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">&#x27;</div>
+        <div class="stat-label">Madras</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Projects</h2>
+  </div>
+  <div class="projects-list">
+    <div class="project-item">
+      <div class="project-num">001</div>
+      <div>
+        <div class="project-title">Git Security Fix — .env Purge</div>
+        <div class="project-desc">Identified and removed accidentally committed .env secrets from an entire git history using filter-branch. Added .gitignore and .env.example best practices.</div>
+      </div>
+      <div class="project-tag">DevSecOps</div>
+    </div>
+    <div class="project-item">
+      <div class="project-num">002</div>
+      <div>
+        <div class="project-title">Git Time Travel Investigation</div>
+        <div class="project-desc">Investigated a production incident by traversing git history to pinpoint the exact commit that introduced a breaking configuration change and identified its parent commit.</div>
+      </div>
+      <div class="project-tag">Git</div>
+    </div>
+    <div class="project-item">
+      <div class="project-num">003</div>
+      <div>
+        <div class="project-title">Flask REST API Service</div>
+        <div class="project-desc">Built a production-ready Flask API with JWT authentication, SQLAlchemy ORM, Redis caching, rate limiting, and CI/CD pipeline integration.</div>
+      </div>
+      <div class="project-tag">Backend</div>
+    </div>
+    <div class="project-item">
+      <div class="project-num">004</div>
+      <div>
+        <div class="project-title">GitHub Pages Portfolio</div>
+        <div class="project-desc">Designed and deployed this portfolio site using pure HTML/CSS with no frameworks — hosted on GitHub Pages with a custom editorial aesthetic.</div>
+      </div>
+      <div class="project-tag">Frontend</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-cell"><div class="skill-name">Python</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Advanced</div></div>
+    <div class="skill-cell"><div class="skill-name">Git / Version Control</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Advanced</div></div>
+    <div class="skill-cell"><div class="skill-name">SQL / Databases</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-cell"><div class="skill-name">Machine Learning</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-cell"><div class="skill-name">Flask / REST APIs</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-cell"><div class="skill-name">Data Analysis</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-cell"><div class="skill-name">Linux / Shell</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-cell"><div class="skill-name">Statistics</div><div class="skill-bar" style="--pct:0%"></div><div class="skill-level">Intermediate</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-big">Let's connect &amp; collaborate.</div>
+    <div class="contact-detail">
+      <div class="contact-row">
+        <span class="contact-key">Email</span>
+        <span class="contact-val"><!--email_off-->22f1000594@ds.study.iitm.ac.in<!--/email_off--></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-key">Institution</span>
+        <span class="contact-val">IIT Madras — BS Data Science &amp; Applications</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-key">Program</span>
+        <span class="contact-val">Bachelor of Science, Data Science &amp; Applications</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 — IITM DS Student</span>
+  <span><!--email_off-->22f1000594@ds.study.iitm.ac.in<!--/email_off--></span>
+</footer>
+
+<script>
+  // Animate skill bars on scroll
+  const skillLevels = { 'Advanced': '88%', 'Intermediate': '62%', 'Beginner': '35%' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        const bar = el.target.querySelector('.skill-bar');
+        const level = el.target.querySelector('.skill-level').textContent.trim();
+        if (bar) bar.style.setProperty('--pct', skillLevels[level] || '50%');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.skill-cell').forEach(c => observer.observe(c));
+
+  // Fade in project items
+  const projObserver = new IntersectionObserver((entries) => {
+    entries.forEach((el, i) => {
+      if (el.isIntersecting) {
+        setTimeout(() => el.target.classList.add('visible'), i * 80);
+        projObserver.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.project-item').forEach(p => projObserver.observe(p));
+</script>
+</body>
+</html>
+.forEach(p => projObserver.observe(p));
+</script>
+</body>
+</html>
