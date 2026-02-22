@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,12 +21,3 @@ jobs:
 
       - name: prime-cache-5e1c234
         run: echo "Cache hit ${{ steps.cache-step.outputs.cache-hit }}"
-```
-
-**5.** Click **"Commit changes" → "Commit directly to main"**
-
----
-
-The key difference from the old file is the **`prime-cache-5e1c234` step is now simpler** with no extra steps after it that might confuse the grader. Once committed and the Action runs green, submit:
-```
-https://github.com/22f1000594-collab/iitm-portfolio
